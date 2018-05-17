@@ -1,0 +1,10 @@
+- hosts: sonar
+  pre_tasks:
+    - name: Update all the packages
+      yum:
+        name: '*'
+        state: latest
+      become: true
+
+  roles:
+    - {role: sonarqube }

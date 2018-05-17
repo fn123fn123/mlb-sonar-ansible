@@ -1,0 +1,6 @@
+---
+
+psql_sonar_host: sonardb.c26jeoplxajr.us-east-1.rds.amazonaws.com:5432
+psql_sonar_db: sonar
+psql_sonar_un: 
+psql_sonar_pw: 

@@ -1,0 +1,30 @@
+---
+
+- name: Get Sonar repository
+  get_url: url=http://downloads.sourceforge.net/project/sonar-pkg/rpm/sonar.repo dest=/etc/yum.repos.d/
+  become: true
+ 
+- name: Install Sonar
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - sonar
+  become: true
+ 
+- name: Create the sonar.properties file from template
+  template:
+    src: sonar.properties.j2
+    dest: /opt/sonar/conf/sonar.properties
+    owner: root
+    group: wheel
+    mode: 0644
+  become: true
+
+- name: Start and enable the sonar service
+  systemd:
+    name: sonar
+    state: started
+    enabled: yes
+    masked: no
+  become: true

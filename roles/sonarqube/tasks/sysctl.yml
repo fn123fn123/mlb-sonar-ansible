@@ -1,0 +1,27 @@
+---
+
+- name: Set vm.max_map_count in /etc/sysctl.conf
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    state: present
+
+- name: Set fs.file-max in /etc/sysctl.conf
+  sysctl:
+    name: fs.file-max
+    value: 65536
+    state: present
+
+- name: Add nofile soft limit for sonar
+  pam_limits:
+    domain: sonar
+    limit_type: soft
+    limit_item: nofile
+    value: 65536
+
+- name: Add nproc soft limit for sonar
+  pam_limits:
+    domain: sonar
+    limit_type: soft
+    limit_item: nproc
+    value: 2048
