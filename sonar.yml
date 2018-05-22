@@ -1,4 +1,4 @@
-- hosts: sonar
+- hosts: localhost
   pre_tasks:
     - name: Update all the packages
       yum:
