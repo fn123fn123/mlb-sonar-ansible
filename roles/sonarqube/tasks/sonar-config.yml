@@ -1,0 +1,20 @@
+---
+
+- name: Create the sonar.properties file from template
+  template:
+    src: sonar.properties.j2
+    dest: /opt/sonar/conf/sonar.properties
+    owner: root
+    group: wheel
+    mode: 0644
+  become: true
+  register: sonarconfig
+
+- name: Restart Sonar
+  systemd:
+    name: sonar
+    state: restarted
+    enabled: yes
+  when: sonarconfig.changed
+  become: true
+
