@@ -3,3 +3,4 @@
 - include: sysctl.yml
 - include: install_java.yml
 - include: sonar.yml
+- include: efs-mount.yml

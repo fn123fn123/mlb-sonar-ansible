@@ -4,3 +4,5 @@ psql_sonar_host:
 psql_sonar_db: sonar
 psql_sonar_un: 
 psql_sonar_pw: 
+efs_id:
+aws_region: us-east-1

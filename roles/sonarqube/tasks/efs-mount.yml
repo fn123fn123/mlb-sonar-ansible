@@ -1,0 +1,36 @@
+---
+
+- name: Install NFS
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - nfs-utils
+  become: true
+
+- name: Ensure mount directory exists.
+  file:
+    path: "/opt/sonar/extensions/plugins"
+    state: directory
+    owner: sonar
+    group: sonar
+    mode: 0755
+  become: true
+
+- name: Mount EFS volume
+  mount:
+    name: "/opt/sonar/extensions/plugins"
+    src: "{{ efs_id }}.efs.{{ aws_region }}.amazonaws.com:/"
+    fstype: nfs4
+    opts: nfsvers=4.1
+    state: mounted
+  become: true
+  register: mountefs
+
+- name: Restart Sonar
+  systemd:
+    name: sonar
+    state: restarted
+    enabled: yes
+  when: mountefs.changed
+  become: true
