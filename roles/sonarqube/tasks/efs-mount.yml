@@ -27,6 +27,14 @@
   become: true
   register: mountefs
 
+- name: Set ownership and permissions
+  file:
+    path: "/opt/sonar/extensions/plugins"
+    owner: sonar
+    group: sonar
+    mode: 0755
+  become: true
+
 - name: Restart Sonar
   systemd:
     name: sonar
